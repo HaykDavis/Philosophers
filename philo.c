@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/12 16:18:33 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/16 15:47:16 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void *eat(void *args)
 	philo_o	*arg;
 
 	arg = (philo_o *)args;
-	while (1)
+	while (!flag_dead)
 	{
 		printf("Philo № %d started dinner\n", arg->philosofer->philo_number);
 		pthread_mutex_lock(&forkk[arg->philosofer->left_fork]);
@@ -58,8 +58,10 @@ int main(int argc, char **argv)
 	pthread_t			trd[ft_atoi(argv[1])];
 	philo_o				arguments[ft_atoi(argv[1])];
 	
-	arguments->philosofer = malloc(sizeof(philosopher_t) * ft_atoi(argv[1]));
-	arguments->data = malloc(sizeof(philosopher_i) * ft_atoi(argv[1]));
+	arguments->philosofer = malloc(sizeof(philosopher_t) * (ft_atoi(argv[1]) + 1));
+	arguments->data = malloc(sizeof(philosopher_i) * (ft_atoi(argv[1]) + 1));
+	arguments->data->time_st = get_time();
+	flag_dead = 0;
 	i = 0;
 	while (i < ft_atoi(argv[1]))
 		init_data(&arguments->data[i], argv), i++;
@@ -80,7 +82,7 @@ int main(int argc, char **argv)
 	while (i < ft_atoi(argv[1]))
 		pthread_create(&trd[i], NULL, eat, &arguments[i]), i++;
 	i = 0;
-	while (i < ft_atoi(argv[1]))
-		pthread_join(trd[i], NULL), i++;
+	while(1)
+	{}
 	return (0);
 }
