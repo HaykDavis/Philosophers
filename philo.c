@@ -6,49 +6,65 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/16 15:47:16 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:22:34 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *eat(void *args)
+void	philo_sleep(int time_to, philo_o *arg)
+{
+	struct timeval	tv;
+	int				cur_time;
+	int				res;
+
+	gettimeofday(&tv, NULL);
+	cur_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	res = cur_time + time_to; // если все ок, то он жив
+	while (cur_time < res && flag_dead == 0)
+	{
+		usleep(100);
+		gettimeofday(&tv, NULL);
+		cur_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+		if (flag_dead == 1)
+			break ;
+	}
+}
+
+void eat(philo_o	*arg)
+{
+	pthread_mutex_lock(&arg->data->forkk[arg->philosofer.left_fork]);
+	printf("%d ms %d has taken fork\n", get_time() - arg->philosofer.time_st,
+		arg->philosofer.philo_id + 1);
+	pthread_mutex_lock(&arg->data->forkk[arg->philosofer.right_fork]);
+	printf("%d ms %d has taken fork\n", get_time() - arg->philosofer.time_st,
+		arg->philosofer.philo_id + 1);
+	// printf("Philo № %d is eating %d %d\n", arg->philosofer.philo_id, arg->philosofer.left_fork, arg->philosofer.right_fork);
+	// sleep(1); // arg->philosofer->eating_st = get_time();
+	// philo_sleep(arg->moves->time_to_eat, arg);
+	
+	pthread_mutex_unlock(&arg->data->forkk[arg->philosofer.left_fork]);
+	pthread_mutex_unlock(&arg->data->forkk[arg->philosofer.right_fork]);
+	// if (philo->need_to_eat > 0)
+	// 	philo->need_to_eat--;
+	// if (philo->need_to_eat == 0)
+	// 	philo->input->finish_eating++;
+	// printf("Philo № %d finished dinner\n", arg->philosofer->philo_number);
+}
+
+void *start_philo(void *tmp)
 {
 	philo_o	*arg;
 
-	arg = (philo_o *)args;
-	while (!flag_dead)
+	arg = (philo_o *)tmp;
+	// printf("time3: %d\n", arg->moves->time_st);
+	if (arg->philosofer.philo_id % 2 == 0)
+		usleep(100);
+	while (flag_dead == 0) //&&
 	{
-		printf("Philo № %d started dinner\n", arg->philosofer->philo_number);
-		pthread_mutex_lock(&forkk[arg->philosofer->left_fork]);
-		pthread_mutex_lock(&forkk[arg->philosofer->right_fork]);
-		printf("Philo № %d is eating %d %d\n", arg->philosofer->philo_number, arg->philosofer->left_fork, arg->philosofer->right_fork);
-		sleep(1);
-		pthread_mutex_unlock(&forkk[arg->philosofer->left_fork]);
-		pthread_mutex_unlock(&forkk[arg->philosofer->right_fork]);
-		printf("Philo № %d finished dinner\n", arg->philosofer->philo_number);
+		eat(arg);
 	}
 	return NULL;
-}
-
-
-void init_data(philosopher_i *data, char **argv) 
-{
-	data->number_of_philosophers = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-}
-
-
-void init_philosopher(philosopher_t *philosopher,
-						int philo_number,
-                      unsigned left_fork,
-                      unsigned right_fork) 
-{
-	philosopher->philo_number = philo_number;
-    philosopher->left_fork = left_fork;
-    philosopher->right_fork = right_fork;
 }
 
 int main(int argc, char **argv)
@@ -58,31 +74,13 @@ int main(int argc, char **argv)
 	pthread_t			trd[ft_atoi(argv[1])];
 	philo_o				arguments[ft_atoi(argv[1])];
 	
-	arguments->philosofer = malloc(sizeof(philosopher_t) * (ft_atoi(argv[1]) + 1));
-	arguments->data = malloc(sizeof(philosopher_i) * (ft_atoi(argv[1]) + 1));
-	arguments->data->time_st = get_time();
-	flag_dead = 0;
+	arguments->data = malloc(sizeof(philosopher_i));
+	all_inits(arguments, argv);
 	i = 0;
 	while (i < ft_atoi(argv[1]))
-		init_data(&arguments->data[i], argv), i++;
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-		pthread_mutex_init(&(forkk[i]), NULL), i++;
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-	{
-		if (i == ft_atoi(argv[1]) - 1)
-			init_philosopher(&arguments->philosofer[i], i, i, 0);
-		init_philosopher(&arguments->philosofer[i], i, i, i + 1), i++;
-	}
-	z = 0;
-	while (z < ft_atoi(argv[1]))
-        arguments[z].philosofer = &arguments->philosofer[z], z++;
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-		pthread_create(&trd[i], NULL, eat, &arguments[i]), i++;
-	i = 0;
+		pthread_create(&trd[i], NULL, start_philo, &arguments[i]), i++;
 	while(1)
 	{}
+	free(arguments->data);
 	return (0);
 }
