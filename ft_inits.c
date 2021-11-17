@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/17 16:14:35 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:37:32 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void all_inits(philo_o	*arguments, char **argv)
 	{
 		arguments[i].philosofer.time_st = get_time();
 		init_data(arguments->data, argv);
-		pthread_mutex_init(&arguments->data->forkk[i], NULL);
+		pthread_mutex_init(&arguments->forkk[i], NULL);
 		if (i == ft_atoi(argv[1]) - 1)
 			init_philosopher(&arguments[i].philosofer, i, i, 0);
 		init_philosopher(&arguments[i].philosofer, i, i, i + 1), i++;

@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:29 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/17 15:57:47 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/17 19:04:34 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,31 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-// pthread_mutex_t m_mute[1];
 int flag_dead;
 
-typedef struct philosopher_tag // для каждого контретно
+typedef struct philosopher_tag
 {
+	int	time_st;
 	int philo_id;
 	int eating_st;
-	int	time_st;
 	int	must_to_eat;
 	int	finish_eating;
-    unsigned left_fork;
-    unsigned right_fork;
+    int left_fork;
+    int right_fork;
 
 }				philosopher_t;
 
-typedef struct philosopger_init //общая структура
+typedef struct philosopger_init
 {
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	number_of_philosophers;
-	pthread_mutex_t forkk[200];
 }				philosopher_i;
 
 typedef struct philo_obj
 {
+	pthread_mutex_t forkk[200];
 	philosopher_t	philosofer;
     philosopher_i	*data;
 }				philo_o;
