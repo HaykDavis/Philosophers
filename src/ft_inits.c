@@ -6,11 +6,11 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/17 18:37:32 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/18 17:38:05 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 void init_data(philosopher_i *data, char **argv) 
 {
@@ -34,13 +34,15 @@ void init_philosopher(philosopher_t *philosopher,
 void all_inits(philo_o	*arguments, char **argv)
 {
 	int	i;
+	
 
 	i = 0;
 	flag_dead = 0;
+	init_data(arguments->data, argv);
+	arguments->data->time_st = get_time();
 	while (i < ft_atoi(argv[1]))
 	{
-		arguments[i].philosofer.time_st = get_time();
-		init_data(arguments->data, argv);
+		arguments[i].data = arguments[0].data;
 		pthread_mutex_init(&arguments->forkk[i], NULL);
 		if (i == ft_atoi(argv[1]) - 1)
 			init_philosopher(&arguments[i].philosofer, i, i, 0);

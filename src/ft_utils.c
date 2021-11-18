@@ -6,11 +6,11 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:20 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/12 17:56:50 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/18 12:26:14 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int	part_of_atoi(char *str, long int i, long int point)
 {

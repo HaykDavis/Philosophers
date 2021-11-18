@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:29 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/17 19:04:34 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/18 17:36:11 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,21 @@ int flag_dead;
 
 typedef struct philosopher_tag
 {
-	int	time_st;
 	int philo_id;
 	int eating_st;
-	int	must_to_eat;
-	int	finish_eating;
     int left_fork;
     int right_fork;
+	int	need_to_eat;
+	int	finish_eating;
 
 }				philosopher_t;
 
 typedef struct philosopger_init
 {
+	int	time_st;
 	int	time_to_die;
 	int	time_to_eat;
+	int	must_to_eat;
 	int	time_to_sleep;
 	int	number_of_philosophers;
 }				philosopher_i;
