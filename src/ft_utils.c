@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:20 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/18 12:26:14 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/19 17:20:06 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,13 @@ int	get_time(void)
 
 	gettimeofday(&curr_time, NULL);
 	return ((curr_time.tv_sec * 1000) + (curr_time.tv_usec / 1000));
+}
+
+void	ft_usleep(long int time)
+{
+	long int	start_time;
+
+	start_time = get_time();
+	while ((get_time() - start_time) < time)
+		usleep(time / 10);
 }
