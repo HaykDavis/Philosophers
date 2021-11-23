@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/23 16:02:32 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:13:11 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int	main(int argc, char **argv)
 	}
 	death_check(arg);
 	free(arg->data);
+	free(arg->data->txt_mut);
 	return (0);
 }
