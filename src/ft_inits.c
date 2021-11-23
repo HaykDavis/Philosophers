@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/23 16:06:42 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/23 18:04:59 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	all_inits(t_philo_o	*arg, char **argv, int argc)
 		pthread_mutex_init(&arg->data->forkk[i], NULL);
 		if (i == ft_atoi(argv[1]) - 1)
 			init_philosopher(&arg[i], i, i, 0);
-		init_philosopher(&arg[i], i, i, i + 1);
+		else
+			init_philosopher(&arg[i], i, i, i + 1);
 		i++;
 	}
 }

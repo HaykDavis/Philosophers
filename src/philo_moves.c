@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 19:40:47 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/23 16:07:01 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/23 18:07:17 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	if_dead(t_philo_o *arg, int i)
 {
-	if (arg[i].philosofer.eating_st && get_time()
-		- arg[i].philosofer.eating_st > arg->data->time_to_die)
+	if (arg->data->num_of_philo == 1 || (arg[i].philosofer.eating_st
+			&& get_time() - arg[i].philosofer.eating_st
+			> arg->data->time_to_die))
 	{
 		if (g_flag_dead == 0 && arg[i].philosofer.need_to_eat != 0)
 		{
@@ -35,10 +36,15 @@ void	death_check(t_philo_o *arg)
 	i = 0;
 	while (g_flag_dead == 0 && arg->data->fin_eat < arg->data->num_of_philo)
 	{
-		if (i == arg->data->num_of_philo - 1)
-			i = 0;
-		if_dead(arg, i);
-		i++;
+		if (arg->data->num_of_philo == 1)
+			if_dead(arg, i);
+		else
+		{
+			if (i == arg->data->num_of_philo - 1)
+				i = 0;
+			if_dead(arg, i);
+			i++;
+		}
 	}
 }
 
