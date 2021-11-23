@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/22 19:36:21 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:06:42 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	init_data(t_philo *data, char **argv, int argc)
 
 void	init_philosopher(t_philo_o *philo,
 						int philo_number,
-					  unsigned left_fork,
-					  unsigned right_fork)
+						unsigned left_fork,
+						unsigned right_fork)
 {
 	philo->philosofer.philo_id = philo_number;
 	philo->philosofer.left_fork = left_fork;
@@ -53,6 +53,7 @@ void	all_inits(t_philo_o	*arg, char **argv, int argc)
 		pthread_mutex_init(&arg->data->forkk[i], NULL);
 		if (i == ft_atoi(argv[1]) - 1)
 			init_philosopher(&arg[i], i, i, 0);
-		init_philosopher(&arg[i], i, i, i + 1), i++;
+		init_philosopher(&arg[i], i, i, i + 1);
+		i++;
 	}
 }

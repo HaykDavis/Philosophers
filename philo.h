@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:29 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/22 19:42:15 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:05:17 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ typedef struct t_philo_obj
 
 int		get_time(void);
 int		ft_atoi(char *str);
-void	sleeps(t_philo_o	*arg);
-void	death_check(t_philo_o *arg);
-void	philo_sleep_eat(int time);
 void	ft_usleep(long int time);
+void	eat_next(t_philo_o	*arg);
+void	sleeps(t_philo_o	*arg);
+void	philo_sleep_eat(int time);
+void	death_check(t_philo_o *arg);
 void	if_dead(t_philo_o *arg, int i);
 void	all_inits(t_philo_o	*arguments, char **argv, int argc);
 int		part_of_atoi(char *str, long int i, long int point);

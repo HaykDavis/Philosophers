@@ -6,7 +6,7 @@
 #    By: psoares <psoares@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 02:12:46 by psoares           #+#    #+#              #
-#    Updated: 2021/11/18 12:31:46 by psoares          ###   ########.fr        #
+#    Updated: 2021/11/23 16:03:45 by psoares          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ MY_PHILO	= philo
 MY_PHILO_SRCS = philo.c \
 			ft_utils.c \
 			ft_inits.c \
+			philo_moves.c
 			
 SRC_DIR = src/
 SRC = $(addprefix $(SRC_DIR), $(MY_PHILO_SRCS))
