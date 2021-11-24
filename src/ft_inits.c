@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 17:59:34 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/24 18:16:57 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,35 @@ void	init_philosopher(t_philo_o *arg,
 	arg->philosofer[id].obj = arg;
 }
 
+void	malloc_data(t_philo_o	*arg, char **argv)
+{
+	arg->txt_mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (!arg->txt_mut)
+	{
+		free(arg->txt_mut);
+		free(arg);
+		return ;
+	}
+	arg->forkk = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* ft_atoi(argv[1]));
+	if (!arg->forkk)
+	{
+		free(arg->forkk);
+		free(arg->txt_mut);
+		free(arg);
+		return ;
+	}
+	arg->philosofer = (t_philosopher *)malloc(sizeof(t_philosopher)
+			* ft_atoi(argv[1]));
+	if (!arg->philosofer)
+	{
+		free(arg->philosofer);
+		free(arg->txt_mut);
+		free(arg);
+		return ;
+	}
+}
+
 void	all_inits(t_philo_o	*arg, char **argv, int argc)
 {
 	int	i;
@@ -50,12 +79,8 @@ void	all_inits(t_philo_o	*arg, char **argv, int argc)
 	i = 0;
 	arg->g_flag_dead = 0;
 	init_data(&arg->data, argv, argc);
-	arg->txt_mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	arg->forkk = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* ft_atoi(argv[1]));
+	malloc_data(arg, argv);
 	pthread_mutex_init(arg->txt_mut, NULL);
-	arg->philosofer = (t_philosopher *)malloc(sizeof(t_philosopher)
-			* ft_atoi(argv[1]));
 	while (i < ft_atoi(argv[1]))
 	{
 		pthread_mutex_init(&arg->forkk[i], NULL);

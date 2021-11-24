@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:20 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/22 19:36:49 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/24 18:42:02 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,13 @@ int	get_time(void)
 
 	gettimeofday(&curr_time, NULL);
 	return ((curr_time.tv_sec * 1000) + (curr_time.tv_usec / 1000));
+}
+
+void	frees(t_philo_o *arg)
+{
+	free(arg->txt_mut);
+	free(arg->philosofer);
+	free(arg->forkk);
+	free(arg);
+	pthread_mutex_unlock(arg->txt_mut);
 }

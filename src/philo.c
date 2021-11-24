@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 18:01:05 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/24 19:07:36 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	main(int argc, char **argv)
 	t_philo_o	*arg;
 
 	arg = (t_philo_o *)malloc(sizeof(t_philo_o));
+	if (!arg)
+		return (0);
 	all_inits(arg, argv, argc);
 	arg->data.time_st = get_time();
 	i = 0;
@@ -82,9 +84,6 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	death_check(arg);
-	free(arg->txt_mut);
-	free(arg->philosofer);
-	free(arg->forkk);
-	free(arg);
+	frees(arg);
 	return (0);
 }
