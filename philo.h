@@ -20,8 +20,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-int	g_flag_dead;
-
 typedef struct t_philosopherag
 {
 	int	philo_id;
@@ -30,6 +28,8 @@ typedef struct t_philosopherag
 	int	left_fork;
 	int	right_fork;
 	int	need_to_eat;
+	struct philosopger_init *datas;
+	struct t_philo_obj *obj;
 }				t_philosopher;
 
 typedef struct philosopger_init
@@ -41,22 +41,23 @@ typedef struct philosopger_init
 	int				must_to_eat;
 	int				time_to_sleep;
 	int				num_of_philo;
-	pthread_mutex_t	forkk[200];
-	pthread_mutex_t	*txt_mut;
 }				t_philo;
 
 typedef struct t_philo_obj
 {
-	t_philosopher	philosofer;
-	t_philo			*data;
+	int				g_flag_dead;
+	pthread_mutex_t	*forkk;
+	pthread_mutex_t	*txt_mut;
+	t_philosopher	*philosofer;
+	t_philo			data;
 }				t_philo_o;
 
 int		get_time(void);
 int		ft_atoi(char *str);
 void	ft_usleep(long int time);
-void	eat_next(t_philo_o	*arg);
-void	sleeps(t_philo_o	*arg);
-void	philo_sleep_eat(int time);
+void	eat_next(t_philosopher	*arg);
+void	sleeps(t_philosopher	*arg);
+void	philo_sleep_eat(int time, t_philosopher	*arg);
 void	death_check(t_philo_o *arg);
 void	if_dead(t_philo_o *arg, int i);
 void	all_inits(t_philo_o	*arguments, char **argv, int argc);

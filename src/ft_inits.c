@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/23 18:04:59 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/24 16:00:19 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,29 @@ void	init_data(t_philo *data, char **argv, int argc)
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
+	data->fin_eat = 0;
+	data->time_st = 0;
 	if (argc < 6)
 	{
 		data->must_to_eat = -1;
 		return ;
 	}
 	data->must_to_eat = ft_atoi(argv[5]);
-	data->fin_eat = 0;
 }
 
-void	init_philosopher(t_philo_o *philo,
-						int philo_number,
+void	init_philosopher(t_philo_o *arg,
+						int id,
 						unsigned left_fork,
 						unsigned right_fork)
 {
-	philo->philosofer.philo_id = philo_number;
-	philo->philosofer.left_fork = left_fork;
-	philo->philosofer.right_fork = right_fork;
-	philo->philosofer.eating_st = 0;
-	philo->philosofer.need_to_eat = philo->data->must_to_eat;
+	arg->philosofer[id].philo_id = id;
+	arg->philosofer[id].eating_st = 0;
+	arg->philosofer[id].sleeping_st = 0;
+	arg->philosofer[id].left_fork = left_fork;
+	arg->philosofer[id].right_fork = right_fork;
+	arg->philosofer[id].need_to_eat = arg->data.must_to_eat;
+	arg->philosofer[id].datas = &arg->data;
+	arg->philosofer[id].obj = arg;
 }
 
 void	all_inits(t_philo_o	*arg, char **argv, int argc)
@@ -44,17 +48,19 @@ void	all_inits(t_philo_o	*arg, char **argv, int argc)
 	int	i;
 
 	i = 0;
-	g_flag_dead = 0;
-	init_data(arg->data, argv, argc);
-	arg->data->txt_mut = malloc(sizeof(pthread_mutex_t));
+	arg->g_flag_dead = 0;
+	init_data(&arg->data, argv, argc);
+	arg->txt_mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	arg->forkk = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	pthread_mutex_init(arg->txt_mut, NULL);
+	arg->philosofer = (t_philosopher *)malloc(sizeof(t_philosopher) * ft_atoi(argv[1]));
 	while (i < ft_atoi(argv[1]))
 	{
-		arg[i].data = arg[0].data;
-		pthread_mutex_init(&arg->data->forkk[i], NULL);
+		pthread_mutex_init(&arg->forkk[i], NULL);
 		if (i == ft_atoi(argv[1]) - 1)
-			init_philosopher(&arg[i], i, i, 0);
+			init_philosopher(arg, i, i, 0);
 		else
-			init_philosopher(&arg[i], i, i, i + 1);
+			init_philosopher(arg, i, i, i + 1);
 		i++;
 	}
 }
