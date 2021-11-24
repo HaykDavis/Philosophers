@@ -6,13 +6,13 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 17:58:23 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/24 18:01:05 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	eat_next(t_inludesopher	*arg)
+void	eat_next(t_philosopher	*arg)
 {
 	arg->eating_st = get_time();
 	pthread_mutex_lock(arg->obj->txt_mut);
@@ -29,7 +29,7 @@ void	eat_next(t_inludesopher	*arg)
 		arg->datas->fin_eat++;
 }
 
-void	eat(t_inludesopher	*arg)
+void	eat(t_philosopher	*arg)
 {
 	pthread_mutex_lock(&arg->obj->forkk[arg->left_fork]);
 	pthread_mutex_lock(arg->obj->txt_mut);
@@ -54,11 +54,11 @@ void	eat(t_inludesopher	*arg)
 	eat_next(arg);
 }
 
-void	*start_inlude(void *tmp)
+void	*start_philo(void *tmp)
 {
-	t_inludesopher	*philosofer;
+	t_philosopher	*philosofer;
 
-	philosofer = (t_inludesopher *)tmp;
+	philosofer = (t_philosopher *)tmp;
 	if (philosofer->philo_id % 2 == 0)
 		usleep(100);
 	while (philosofer->obj->g_flag_dead != 1 && philosofer->need_to_eat != 0)
@@ -70,15 +70,15 @@ int	main(int argc, char **argv)
 {
 	int			i;
 	pthread_t	trd[200];
-	t_inlude_o	*arg;
+	t_philo_o	*arg;
 
-	arg = (t_inlude_o *)malloc(sizeof(t_inlude_o));
+	arg = (t_philo_o *)malloc(sizeof(t_philo_o));
 	all_inits(arg, argv, argc);
 	arg->data.time_st = get_time();
 	i = 0;
 	while (i < ft_atoi(argv[1]))
 	{
-		pthread_create(&trd[i], NULL, start_inlude, &arg->philosofer[i]);
+		pthread_create(&trd[i], NULL, start_philo, &arg->philosofer[i]);
 		i++;
 	}
 	death_check(arg);
