@@ -61,9 +61,9 @@ int	get_time(void)
 
 void	frees(t_philo_o *arg)
 {
-	free(arg->txt_mut);
+	pthread_mutex_unlock(arg->txt_mut);
 	free(arg->philosofer);
 	free(arg->forkk);
+	free(arg->txt_mut);
 	free(arg);
-	pthread_mutex_unlock(arg->txt_mut);
 }
