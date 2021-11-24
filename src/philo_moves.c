@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 19:40:47 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 15:59:48 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/24 17:59:48 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	philo_sleep_eat(int time, t_philosopher	*arg)
 	}
 }
 
-void	sleeps(t_philosopher	*arg)
+void	sleeps(t_philosopher *arg)
 {
 	if (arg->obj->g_flag_dead == 1)
 		return ;

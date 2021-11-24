@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:29 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/23 16:05:17 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/24 17:58:45 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 
 typedef struct t_philosopherag
 {
-	int	philo_id;
-	int	eating_st;
-	int	sleeping_st;
-	int	left_fork;
-	int	right_fork;
-	int	need_to_eat;
-	struct philosopger_init *datas;
-	struct t_philo_obj *obj;
+	int						philo_id;
+	int						eating_st;
+	int						sleeping_st;
+	int						left_fork;
+	int						right_fork;
+	int						need_to_eat;
+	struct t_philo_obj		*obj;
+	struct philosopger_init	*datas;
 }				t_philosopher;
 
 typedef struct philosopger_init
@@ -46,10 +46,10 @@ typedef struct philosopger_init
 typedef struct t_philo_obj
 {
 	int				g_flag_dead;
+	t_philo			data;
+	t_philosopher	*philosofer;
 	pthread_mutex_t	*forkk;
 	pthread_mutex_t	*txt_mut;
-	t_philosopher	*philosofer;
-	t_philo			data;
 }				t_philo_o;
 
 int		get_time(void);
