@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 19:07:36 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/25 15:16:30 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	main(int argc, char **argv)
 	pthread_t	trd[200];
 	t_philo_o	*arg;
 
+	if (argc < 5 || argc > 6)
+		return (0);
 	arg = (t_philo_o *)malloc(sizeof(t_philo_o));
 	if (!arg)
 		return (0);

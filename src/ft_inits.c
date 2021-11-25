@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 18:16:57 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/25 15:09:09 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	malloc_data(t_philo_o	*arg, char **argv)
 	arg->txt_mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	if (!arg->txt_mut)
 	{
-		free(arg->txt_mut);
 		free(arg);
 		return ;
 	}
@@ -56,7 +55,6 @@ void	malloc_data(t_philo_o	*arg, char **argv)
 			* ft_atoi(argv[1]));
 	if (!arg->forkk)
 	{
-		free(arg->forkk);
 		free(arg->txt_mut);
 		free(arg);
 		return ;
@@ -65,7 +63,7 @@ void	malloc_data(t_philo_o	*arg, char **argv)
 			* ft_atoi(argv[1]));
 	if (!arg->philosofer)
 	{
-		free(arg->philosofer);
+		free(arg->forkk);
 		free(arg->txt_mut);
 		free(arg);
 		return ;
