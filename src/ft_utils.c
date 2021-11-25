@@ -6,26 +6,11 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:20 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 18:42:02 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:46:11 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-int	part_of_atoi(char *str, long int i, long int point)
-{
-	int	n;
-
-	n = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		n = 10 * n + point * (str[i] - '0');
-		i++;
-	}
-	return (n);
-}
 
 int	ft_atoi(char *str)
 {
@@ -44,10 +29,11 @@ int	ft_atoi(char *str)
 			point *= -1;
 		i++;
 	}
-	if (str[i] >= '0' && str[i] <= '9')
-		n = part_of_atoi(str, i, point);
-	else
-		return (0);
+	while (str[i])
+	{
+		n = 10 * n + point * (str[i] - '0');
+		i++;
+	}
 	return (n);
 }
 
@@ -66,4 +52,26 @@ void	frees(t_philo_o *arg)
 	free(arg->forkk);
 	free(arg->txt_mut);
 	free(arg);
+}
+
+int	check_arg(int argc, char **argv)
+{
+	int	i;
+	int	z;
+
+	i = 1;
+	z = 0;
+	while (argv[i][z])
+	{
+		while (argv[i][z])
+		{
+			if (argv[i][z] < '0' || argv[i][z] > '9')
+				return (0);
+			z++;
+		}
+		i++;
+	}
+	if (ft_atoi(argv[3]) < 60 || ft_atoi(argv[1]) > 200 || argc < 5 || argc > 6)
+		return (0);
+	return (1);
 }

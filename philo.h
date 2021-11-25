@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:29 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/24 18:04:36 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:46:27 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	sleeps(t_philosopher *arg);
 void	death_check(t_philo_o *arg);
 void	eat_next(t_philosopher	*arg);
 void	if_dead(t_philo_o *arg, int i);
+int		check_arg(int argc, char **argv);
 void	philo_sleep_eat(int time, t_philosopher	*arg);
 void	all_inits(t_philo_o	*arguments, char **argv, int argc);
-int		part_of_atoi(char *str, long int i, long int point);
 
 #endif
