@@ -39,6 +39,7 @@ void	eat(t_philosopher	*arg)
 	if (arg->obj->g_flag_dead == 1)
 	{
 		pthread_mutex_unlock(&arg->obj->forkk[arg->left_fork]);
+		pthread_detach(arg->obj->trd[arg->philo_id]);
 		return ;
 	}
 	pthread_mutex_lock(&arg->obj->forkk[arg->right_fork]);
@@ -49,6 +50,7 @@ void	eat(t_philosopher	*arg)
 	if (arg->obj->g_flag_dead == 1)
 	{
 		pthread_mutex_unlock(&arg->obj->forkk[arg->right_fork]);
+		pthread_detach(arg->obj->trd[arg->philo_id]);
 		return ;
 	}
 	eat_next(arg);
@@ -69,7 +71,6 @@ void	*start_philo(void *tmp)
 int	main(int argc, char **argv)
 {
 	int			i;
-	pthread_t	trd[200];
 	t_philo_o	*arg;
 
 	if (check_arg(argc, argv) == 0)
@@ -82,7 +83,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < ft_atoi(argv[1]))
 	{
-		pthread_create(&trd[i], NULL, start_philo, &arg->philosofer[i]);
+		pthread_create(&arg->trd[i], NULL, start_philo, &arg->philosofer[i]);
 		i++;
 	}
 	death_check(arg);

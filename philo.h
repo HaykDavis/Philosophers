@@ -50,6 +50,7 @@ typedef struct t_philo_obj
 	t_philosopher	*philosofer;
 	pthread_mutex_t	*forkk;
 	pthread_mutex_t	*txt_mut;
+	pthread_t		trd[200];
 }				t_philo_o;
 
 int		get_time(void);
@@ -59,6 +60,7 @@ void	ft_usleep(long int time);
 void	sleeps(t_philosopher *arg);
 void	death_check(t_philo_o *arg);
 void	eat_next(t_philosopher	*arg);
+void	ft_usleep(long int time_in_ms);
 void	if_dead(t_philo_o *arg, int i);
 int		check_arg(int argc, char **argv);
 void	philo_sleep_eat(int time, t_philosopher	*arg);
