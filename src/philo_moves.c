@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 19:40:47 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/25 17:10:28 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:17:51 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,20 @@ void	philo_sleep_eat(int time, t_philosopher	*arg)
 void	sleeps(t_philosopher *arg)
 {
 	if (arg->obj->g_flag_dead == 1)
+	{
+		pthread_detach(arg->obj->trd[arg->philo_id]);
 		return ;
+	}
 	pthread_mutex_lock(arg->obj->txt_mut);
 	printf("%d ms %d is sleeping\n", get_time() - arg->datas->time_st,
 		arg->philo_id + 1);
 	pthread_mutex_unlock(arg->obj->txt_mut);
 	philo_sleep_eat(arg->datas->time_to_sleep, arg);
 	if (arg->obj->g_flag_dead == 1)
+	{
+		pthread_detach(arg->obj->trd[arg->philo_id]);
 		return ;
+	}
 	pthread_mutex_lock(arg->obj->txt_mut);
 	printf("%d ms %d is thinking\n", get_time() - arg->datas->time_st,
 		arg->philo_id + 1);

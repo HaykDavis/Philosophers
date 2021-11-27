@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:20 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/25 17:46:11 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:13:17 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	get_time(void)
 
 void	frees(t_philo_o *arg)
 {
-	pthread_mutex_unlock(arg->txt_mut);
 	free(arg->philosofer);
 	free(arg->forkk);
+	pthread_mutex_unlock(arg->txt_mut);
 	free(arg->txt_mut);
 	free(arg);
 }

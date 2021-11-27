@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/25 17:42:01 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:15:40 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,27 @@ void	eat_next(t_philosopher	*arg)
 void	eat(t_philosopher	*arg)
 {
 	pthread_mutex_lock(&arg->obj->forkk[arg->left_fork]);
-	pthread_mutex_lock(arg->obj->txt_mut);
-	printf("%d ms %d has taken fork\n", get_time() - arg->datas->time_st,
-		arg->philo_id + 1);
-	pthread_mutex_unlock(arg->obj->txt_mut);
 	if (arg->obj->g_flag_dead == 1)
 	{
 		pthread_mutex_unlock(&arg->obj->forkk[arg->left_fork]);
 		pthread_detach(arg->obj->trd[arg->philo_id]);
 		return ;
 	}
-	pthread_mutex_lock(&arg->obj->forkk[arg->right_fork]);
 	pthread_mutex_lock(arg->obj->txt_mut);
 	printf("%d ms %d has taken fork\n", get_time() - arg->datas->time_st,
 		arg->philo_id + 1);
 	pthread_mutex_unlock(arg->obj->txt_mut);
+	pthread_mutex_lock(&arg->obj->forkk[arg->right_fork]);
 	if (arg->obj->g_flag_dead == 1)
 	{
 		pthread_mutex_unlock(&arg->obj->forkk[arg->right_fork]);
 		pthread_detach(arg->obj->trd[arg->philo_id]);
 		return ;
 	}
+	pthread_mutex_lock(arg->obj->txt_mut);
+	printf("%d ms %d has taken fork\n", get_time() - arg->datas->time_st,
+		arg->philo_id + 1);
+	pthread_mutex_unlock(arg->obj->txt_mut);
 	eat_next(arg);
 }
 
