@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:20 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/29 14:34:57 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:53:22 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ int	check_arg(int argc, char **argv)
 	int	i;
 	int	z;
 
-	if (argc < 5 || argc > 6 || ft_atoi(argv[1]) > 200 || ft_atoi(argv[3]) < 60)
+	if (argc < 5 || argc > 6 || ft_atoi(argv[1]) > 200
+		|| ft_atoi(argv[2]) < 60 || ft_atoi(argv[3]) < 60
+		|| ft_atoi(argv[4]) < 60)
+		return (0);
+	if (argc == 6 && ft_atoi(argv[5]) == 0)
 		return (0);
 	i = 1;
 	while (argv[i])
@@ -74,13 +78,4 @@ int	check_arg(int argc, char **argv)
 		i++;
 	}
 	return (1);
-}
-
-void	ft_usleep(long int time_in_ms)
-{
-	long int	start_time;
-
-	start_time = get_time();
-	while ((get_time() - start_time) < time_in_ms)
-		usleep(time_in_ms / 10);
 }

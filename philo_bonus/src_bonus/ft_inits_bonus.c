@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:14:33 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/29 13:01:46 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:54:09 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	init_forks(t_philo_o *data)
 {
-	sem_unlink("/forks");
-	data->forkk = sem_open("/forks", O_CREAT, S_IRWXU, data->data.num_of_philo);
+	sem_unlink("/forkk");
+	data->forkk = sem_open("/forkk", O_CREAT, S_IRWXU, data->data.num_of_philo);
 	if (data->forkk == SEM_FAILED)
 		return (1);
-	sem_unlink("/print_lock");
-	data->txt_mut = sem_open("/print_lock", O_CREAT, S_IRWXU, 1);
+	sem_unlink("/txt_mute");
+	data->txt_mut = sem_open("/txt_mute", O_CREAT, S_IRWXU, 1);
 	if (data->txt_mut == SEM_FAILED)
 		return (1);
 	return (0);
