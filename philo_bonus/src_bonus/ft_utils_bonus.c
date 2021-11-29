@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:20 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/28 14:24:09 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/29 15:56:55 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@ int	get_time(void)
 
 void	frees(t_philo_o *arg)
 {
+	sem_unlink("/forks");
+	sem_unlink("/print_lock");
+	sem_close(arg->forkk);
+	sem_close(arg->txt_mut);
 	free(arg->philosofer);
-	// sem_post(arg->txt_mut);
+	sem_post(arg->txt_mut);
 	free(arg);
 }
 
@@ -57,10 +61,12 @@ int	check_arg(int argc, char **argv)
 	int	i;
 	int	z;
 
+	if (argc < 5 || argc > 6 || ft_atoi(argv[1]) > 200 || ft_atoi(argv[3]) < 60)
+		return (0);
 	i = 1;
-	z = 0;
-	while (argv[i][z])
+	while (argv[i])
 	{
+		z = 0;
 		while (argv[i][z])
 		{
 			if (argv[i][z] < '0' || argv[i][z] > '9')
@@ -69,8 +75,6 @@ int	check_arg(int argc, char **argv)
 		}
 		i++;
 	}
-	if (ft_atoi(argv[3]) < 60 || ft_atoi(argv[1]) > 200 || argc < 5 || argc > 6)
-		return (0);
 	return (1);
 }
 

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:29 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/27 22:11:38 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:03:04 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <string.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <pthread.h>
 # include <sys/time.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <semaphore.h>
 # include <signal.h>
 
@@ -62,6 +64,9 @@ int		ft_atoi(char *str);
 void	frees(t_philo_o *arg);
 void	ft_usleep(long int time);
 void	sleeps(t_philosopher *arg);
+void	do_pross(t_philosopher *arg);
+void	*start_philo(void *tmp);
+int		pros_create(t_philo_o *arg);
 void	death_check(t_philo_o *arg);
 void	eat_next(t_philosopher	*arg);
 void	ft_usleep(long int time_in_ms);

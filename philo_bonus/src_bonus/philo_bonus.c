@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:45:26 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/28 14:24:16 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:02:04 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,36 +68,9 @@ void	*start_philo(void *tmp)
 	return (NULL);
 }
 
-void do_pross(t_philosopher *arg)
-{
-	pthread_create(&arg->obj->trd[arg->philo_id],
-		NULL, start_philo, arg);
-	death_check(arg->obj);
-}
-
-int pros_create(t_philo_o *arg)
-{
-	int i;
-	pid_t p;
-
-	i = 0;
-	while (i < arg->data.num_of_philo)
-	{
-		p = fork();
-		if (p < 0)
-			return (0);
-		if (p == 0)
-			do_pross(&arg->philosofer[i]);
-		arg->philosofer[i].pid = p;
-		i++;
-	}
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	int			i;
-	int			st;
 	t_philo_o	*arg;
 
 	if (check_arg(argc, argv) == 0)
@@ -109,11 +82,11 @@ int	main(int argc, char **argv)
 	arg->data.time_st = get_time();
 	if (pros_create(arg) == 0)
 		exit(1);
-	waitpid(-1, &st, WUNTRACED);
+	waitpid(-1, NULL, 0);
 	i = 0;
 	while (i < arg->data.num_of_philo)
 	{
-		kill(arg->philosofer[i].pid, SIGTERM);
+		kill(arg->philosofer[i].pid, SIGKILL);
 		i++;
 	}
 	frees(arg);

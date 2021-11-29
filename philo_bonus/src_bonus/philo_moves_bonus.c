@@ -6,7 +6,7 @@
 /*   By: psoares <psoares@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 19:40:47 by psoares           #+#    #+#             */
-/*   Updated: 2021/11/28 14:24:19 by psoares          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:06:22 by psoares          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,21 @@ void	death_check(t_philo_o *arg)
 	while (arg->g_flag_dead == 0 && arg->data.fin_eat < arg->data.num_of_philo)
 	{
 		if (arg->philosofer[arg->philosofer->philo_id].need_to_eat == 0)
-			exit(1);
-		if (arg->data.num_of_philo == 1 || (arg->philosofer[arg->philosofer->philo_id].eating_st
-			&& get_time() - arg->philosofer[arg->philosofer->philo_id].eating_st
-			> arg->data.time_to_die))
+			exit(0);
+		if (arg->data.num_of_philo == 1
+			|| (arg->philosofer[arg->philosofer->philo_id].eating_st
+				&& get_time()
+				- arg->philosofer[arg->philosofer->philo_id].eating_st
+				> arg->data.time_to_die))
 		{
-			if (arg->g_flag_dead == 0 && arg->philosofer[arg->philosofer->philo_id].need_to_eat != 0)
+			if (arg->g_flag_dead == 0
+				&& arg->philosofer[arg->philosofer->philo_id].need_to_eat != 0)
 			{
 				arg->g_flag_dead = 1;
 				sem_wait(arg->txt_mut);
 				printf("%d ms %d died\n", get_time() - arg->data.time_st,
 					arg->philosofer[arg->philosofer->philo_id].philo_id + 1);
-				exit(1);
+				exit(0);
 			}
 		}
 	}
@@ -71,4 +74,30 @@ void	sleeps(t_philosopher *arg)
 	printf("%d ms %d is thinking\n", get_time() - arg->datas->time_st,
 		arg->philo_id + 1);
 	sem_post(arg->obj->txt_mut);
+}
+
+void	do_pross(t_philosopher *arg)
+{
+	pthread_create(&arg->obj->trd[arg->philo_id],
+		NULL, start_philo, arg);
+	death_check(arg->obj);
+}
+
+int	pros_create(t_philo_o *arg)
+{
+	int		i;
+	pid_t	p;
+
+	i = 0;
+	while (i < arg->data.num_of_philo)
+	{
+		p = fork();
+		if (p < 0)
+			return (0);
+		if (p == 0)
+			do_pross(&arg->philosofer[i]);
+		arg->philosofer[i].pid = p;
+		i++;
+	}
+	return (1);
 }
